@@ -45,3 +45,5 @@ Thumbs.db
 # ========================
 out.txt
 instruction.md
+.vercel
+.env*.local
