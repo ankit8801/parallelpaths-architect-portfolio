@@ -10,6 +10,7 @@ import { uploadFile } from '../firebase/services/storageService'
 import { processImageForWeb } from '../utils/imageProcessor'
 import ProjectModal from '../components/ProjectModal'
 import ImageCropModal from '../components/ImageCropModal'
+import houseRender from '../assets/transparentbackgroundhouse.png'
 
 export default function Admin() {
   const [isLoggedIn, setIsLoggedIn] = useState(false)
@@ -426,16 +427,44 @@ export default function Admin() {
                   <span className="material-symbols-outlined text-accent">home</span>
                   <h3 className="font-headline font-bold text-lg uppercase tracking-wider text-primary-text">Home Page</h3>
                 </div>
-                <div className="space-y-4">
-                  <label className="font-label text-[10px] tracking-[0.2em] uppercase text-primary-text/40 block">Hero Background Image</label>
-                  <div className="relative group rounded-2xl overflow-hidden aspect-video bg-white/5 border border-white/5">
-                    <img src={settings.homeHero || "https://lh3.googleusercontent.com/aida-public/AB6AXuDar4SRBvcnU0_eViIb5fyO6-f6Zg02ySzjPtWTMwm8iYT0H9OjezC7W7-tjQCRve3hTgB6-XpE_4xTAZx4K8djySAxk3G_I2ix6WIMR4c6xnP6bF2NDOtiisni9DCp8PyZsIwCIvNlcg95p7mcSX1XhdeRETG7NrwBx_en3kVoK7FHbmV9qyFSDYBRFRkVUJbVw8K2EMkUp8P6tfogfU3vTyQPAh1udNBEljnTmRqNRbT8uxw2LFelO0HSQcOXa6ITNvRSabgf7l9l"} className="w-full h-full object-cover opacity-50" alt="Home Hero" />
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <label className="cursor-pointer bg-accent text-on-accent px-6 py-3 rounded-full font-headline font-bold text-[10px] uppercase tracking-widest shadow-xl hover:scale-105 transition-all flex items-center gap-2">
-                        {uploadingSlot === 'homeHero' ? <div className="w-4 h-4 border-2 border-on-accent border-t-transparent rounded-full animate-spin" /> : <span className="material-symbols-outlined text-sm">cloud_upload</span>}
-                        Update Home Hero
-                        <input type="file" accept="image/*" className="hidden" onChange={(e) => handleImageUpdate('homeHero', e)} disabled={uploadingSlot === 'homeHero'} />
-                      </label>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                  <div className="space-y-4">
+                    <label className="font-label text-[10px] tracking-[0.2em] uppercase text-primary-text/40 block">Hero Background Image</label>
+                    <div className="relative group rounded-2xl overflow-hidden aspect-video bg-white/5 border border-white/5">
+                      <img src={settings.homeHero || "https://lh3.googleusercontent.com/aida-public/AB6AXuDar4SRBvcnU0_eViIb5fyO6-f6Zg02ySzjPtWTMwm8iYT0H9OjezC7W7-tjQCRve3hTgB6-XpE_4xTAZx4K8djySAxk3G_I2ix6WIMR4c6xnP6bF2NDOtiisni9DCp8PyZsIwCIvNlcg95p7mcSX1XhdeRETG7NrwBx_en3kVoK7FHbmV9qyFSDYBRFRkVUJbVw8K2EMkUp8P6tfogfU3vTyQPAh1udNBEljnTmRqNRbT8uxw2LFelO0HSQcOXa6ITNvRSabgf7l9l"} className="w-full h-full object-cover opacity-50" alt="Home hero" />
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <label className="cursor-pointer bg-accent text-on-accent px-6 py-3 rounded-full font-headline font-bold text-[10px] uppercase tracking-widest shadow-xl hover:scale-105 transition-all flex items-center gap-2">
+                          {uploadingSlot === 'homeHero' ? <div className="w-4 h-4 border-2 border-on-accent border-t-transparent rounded-full animate-spin" /> : <span className="material-symbols-outlined text-sm">cloud_upload</span>}
+                          Update Home Hero
+                          <input type="file" accept="image/*" className="hidden" onChange={(e) => handleImageUpdate('homeHero', e)} disabled={uploadingSlot === 'homeHero'} />
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="space-y-4">
+                    <label className="font-label text-[10px] tracking-[0.2em] uppercase text-primary-text/40 block">Featured Project Image</label>
+                    <div className="relative group rounded-2xl overflow-hidden aspect-video bg-white/5 border border-white/5">
+                      <img src={settings.homeFeaturedImage || "https://lh3.googleusercontent.com/aida-public/AB6AXuANbIL4n3isYdQZkVxQLQGvTdocx1Z5T8RkPdPW5psdhKjVpSzhMAHb2anWRSlDSAePOYnMs26pC2ttf8YuR5u8pGuGrhv8PDFzlE646PKVe8qHo0zpFERgwuJsu_9NFHNE48cgvnOL_NG4ObsNooVxXpVdOdisR0lkTuCyxIJE5ekJAa5FW_8LP3rlCLH2SOXMNFeSiz0l78KChdMDIsqMzLF1ewlK6D_nav19k5OVOni0yJ9eh7kpXcI5KWlmsXk2fhOK4RIgFJmA"} className="w-full h-full object-cover opacity-50" alt="Featured project" />
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <label className="cursor-pointer bg-accent text-on-accent px-6 py-3 rounded-full font-headline font-bold text-[10px] uppercase tracking-widest shadow-xl hover:scale-105 transition-all flex items-center gap-2">
+                          {uploadingSlot === 'homeFeaturedImage' ? <div className="w-4 h-4 border-2 border-on-accent border-t-transparent rounded-full animate-spin" /> : <span className="material-symbols-outlined text-sm">cloud_upload</span>}
+                          Update Featured Image
+                          <input type="file" accept="image/*" className="hidden" onChange={(e) => handleImageUpdate('homeFeaturedImage', e)} disabled={uploadingSlot === 'homeFeaturedImage'} />
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="space-y-4 md:col-span-2">
+                    <label className="font-label text-[10px] tracking-[0.2em] uppercase text-primary-text/40 block">Practice House Render</label>
+                    <div className="relative group rounded-2xl overflow-hidden aspect-[2/1] bg-white/5 border border-white/5">
+                      <img src={settings.homeIntroImage || houseRender} className={`w-full h-full object-contain p-4 ${settings.homeIntroImage ? 'opacity-50' : 'opacity-0'}`} alt="Practice house render" />
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <label className="cursor-pointer bg-accent text-on-accent px-6 py-3 rounded-full font-headline font-bold text-[10px] uppercase tracking-widest shadow-xl hover:scale-105 transition-all flex items-center gap-2">
+                          {uploadingSlot === 'homeIntroImage' ? <div className="w-4 h-4 border-2 border-on-accent border-t-transparent rounded-full animate-spin" /> : <span className="material-symbols-outlined text-sm">cloud_upload</span>}
+                          Update House Render
+                          <input type="file" accept="image/png,image/jpeg,image/webp" className="hidden" onChange={(e) => handleImageUpdate('homeIntroImage', e)} disabled={uploadingSlot === 'homeIntroImage'} />
+                        </label>
+                      </div>
                     </div>
                   </div>
                 </div>

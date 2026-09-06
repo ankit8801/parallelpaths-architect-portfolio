@@ -39,19 +39,13 @@ function Navbar() {
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-        className={`fixed z-[100] transition-all duration-500 mx-auto left-0 right-0 rounded-full flex items-center ${
+        className={`nav-glass fixed z-[100] transition-all duration-500 mx-auto left-0 right-0 rounded-full flex items-center ${
           scrolled ? 'top-4 w-[90%] max-w-5xl' : 'top-6 w-[95%] max-w-6xl'
-        }`}
-        style={{
-          backgroundColor: scrolled ? 'rgba(13, 7, 4, 0.85)' : 'rgba(13, 7, 4, 0.4)',
-          backdropFilter: scrolled ? 'blur(24px)' : 'blur(12px)',
-          border: '1px solid rgba(255, 255, 255, 0.1)',
-          boxShadow: scrolled ? '0 20px 40px -10px rgba(0,0,0,0.5)' : '0 10px 30px -10px rgba(0,0,0,0.2)'
-        }}
+        } ${scrolled ? 'nav-glass-scrolled' : ''}`}
       >
         <div className={`flex justify-between items-center w-full transition-all duration-500 ${scrolled ? 'px-4 md:px-8 py-3' : 'px-6 md:px-10 py-4'}`}>
           <Link to="/" className="flex items-center gap-3 text-lg md:text-xl font-bold tracking-[0.1em] text-primary-text font-headline" aria-label="Jadhav Architects Home">
-            <img src={logoImage} alt="Jadhav Architects Logo" className="h-8 md:h-9 object-contain rounded-sm" />
+            <img src={logoImage} alt="Jadhav Architects Logo" className="h-10 w-10 md:h-11 md:w-11 object-cover rounded-full" />
             <span className="hidden sm:inline">Jadhav Architects</span>
           </Link>
 

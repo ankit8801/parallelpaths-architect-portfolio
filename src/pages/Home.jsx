@@ -2,6 +2,8 @@ import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { Helmet } from 'react-helmet-async'
 import { getSettings } from '../firebase/services/settingsService'
+import { projects } from '../data/projects'
+import houseRender from '../assets/transparentbackgroundhouse.png'
 import React, { useState, useEffect } from 'react'
 
 const DEFAULT_HERO = "https://lh3.googleusercontent.com/aida-public/AB6AXuDar4SRBvcnU0_eViIb5fyO6-f6Zg02ySzjPtWTMwm8iYT0H9OjezC7W7-tjQCRve3hTgB6-XpE_4xTAZx4K8djySAxk3G_I2ix6WIMR4c6xnP6bF2NDOtiisni9DCp8PyZsIwCIvNlcg95p7mcSX1XhdeRETG7NrwBx_en3kVoK7FHbmV9qyFSDYBRFRkVUJbVw8K2EMkUp8P6tfogfU3vTyQPAh1udNBEljnTmRqNRbT8uxw2LFelO0HSQcOXa6ITNvRSabgf7l9l";
@@ -9,11 +11,15 @@ const DEFAULT_HERO = "https://lh3.googleusercontent.com/aida-public/AB6AXuDar4SR
 export default function Home() {
   const customEase = [0.16, 1, 0.3, 1]
   const [heroImage, setHeroImage] = useState(DEFAULT_HERO)
+  const [featuredImage, setFeaturedImage] = useState(projects[0].image)
+  const [introImage, setIntroImage] = useState(houseRender)
 
   useEffect(() => {
     const loadSettings = async () => {
       const settings = await getSettings()
       if (settings.homeHero) setHeroImage(settings.homeHero)
+      if (settings.homeFeaturedImage) setFeaturedImage(settings.homeFeaturedImage)
+      if (settings.homeIntroImage) setIntroImage(settings.homeIntroImage)
     }
     loadSettings()
   }, [])
@@ -39,125 +45,73 @@ export default function Home() {
   }
 
   return (
-    <main className="relative min-h-screen flex items-center pt-24 lg:pt-0 overflow-hidden">
+    <main className="relative overflow-hidden">
       <Helmet>
         <title>Home | Jadhav Architects Architecture</title>
         <meta name="description" content="Jadhav Architects Architecture - Bespoke architectural escapes where modern geometry meets the untamed flow of nature." />
       </Helmet>
 
-      {/* Background split */}
-      <div className="absolute top-0 right-0 w-full lg:w-1/2 h-1/2 lg:h-full bg-section-tone -z-10 opacity-50 lg:opacity-100" />
-
-      <div className="max-w-[1920px] mx-auto w-full px-6 md:px-12 flex flex-col lg:flex-row items-center gap-12 lg:gap-0">
-        {/* Left: Headline */}
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-          className="w-full lg:w-1/2 flex flex-col items-start z-10 pb-12 lg:pb-0 pt-4 lg:pt-0"
-        >
-          <motion.div variants={itemVariants} className="space-y-0">
-            <h1 className="font-headline font-extrabold text-[12vw] sm:text-[10vw] lg:text-[120px] leading-[0.85] tracking-tight uppercase text-primary-text">
-              Wilderness<br />
-              <span className="text-accent italic">Riverside</span><br />
-              Cabins
-            </h1>
-          </motion.div>
-
-          <motion.div variants={itemVariants} className="mt-6 lg:mt-8 max-w-md">
-            <p className="font-body text-base md:text-lg lg:text-xl text-primary-text/70 font-light leading-relaxed">
-              Curating bespoke architectural escapes where modern geometry meets the untamed flow of nature. Experience elevated living in the heart of the wild.
-            </p>
-          </motion.div>
-
-          <motion.div variants={itemVariants} className="mt-8">
-            <Link
-              to="/contact"
-              className="group flex items-center gap-4 bg-accent text-on-accent px-8 md:px-10 py-4 md:py-5 rounded-full font-headline font-bold uppercase tracking-[0.1em] shadow-2xl hover:scale-105 transition-all duration-300"
-              aria-label="Enquire about booking our cabins"
-            >
-              Book Now
-              <span className="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
-            </Link>
-          </motion.div>
-        </motion.div>
-
-        {/* Right: Image + Testimonial */}
-        <div className="relative w-full lg:w-1/2 flex flex-col lg:flex-row items-center justify-center lg:h-screen lg:overflow-visible">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9, y: 20 }}
-            whileInView={{ opacity: 1, scale: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 1, ease: customEase }}
-            className="relative w-[90%] mx-auto lg:mx-0 lg:w-[110%] aspect-[4/5] lg:aspect-auto lg:h-[85%] lg:-ml-[10%] rounded-[500px] overflow-hidden shadow-2xl z-0 mb-12 lg:mb-0"
-          >
-            <img
-              alt="Architectural exterior of a minimalist wooden cabin situated on a rocky ridge beside a tranquil river"
-              className="w-full h-full object-cover"
-              src={heroImage}
-              decoding="async"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent" />
-          </motion.div>
-
-          {/* Testimonial Card */}
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.8, ease: customEase }}
-            className="absolute -bottom-10 lg:bottom-10 right-0 lg:right-10 bg-card-bg/95 backdrop-blur-2xl p-6 md:p-8 rounded-full border border-white/10 shadow-2xl max-w-[90%] sm:max-w-md lg:max-w-xs z-20"
-          >
-            <div className="flex items-center gap-3 mb-3 md:mb-4">
-              <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-accent/20 flex items-center justify-center overflow-hidden shrink-0">
-                <img
-                  alt="Headshot of Elena Rodriguez, a client of Jadhav Architects"
-                  className="w-full h-full object-cover"
-                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuCic1KnN6HJhhlYVNbeTBTNhh-uod8WYt9nwHE6DX10q5PV4biN83-H82gp10V1mUgwSn6mG-WuXqrKH3L3-2vaUncIfN0guwnkEL-ohrTK48HV9eqxtMoD9Ut_VF3RcY1ntIKe546zHxjr-ah8sQ_UWkrIchNOLkhfd0Pi4DsHHwoaD5-McleI2BesdswzBA__-qLGC1OotXnT4KBhMY-08MTjXlB9y-1BaLUFbyzK_vHxahC9za9Wo-XwKkEB_7OFM0KsSgScZl4A"
-                  loading="lazy"
-                />
-              </div>
-              <div className="flex-grow">
-                <p className="font-headline font-bold text-sm md:text-base text-primary-text">minal jadhav</p>
-                <div className="flex text-accent scale-75 -ml-3" aria-label="5 star rating">
-                  {[...Array(5)].map((_, i) => (
-                    <span key={i} className="material-symbols-outlined filled" aria-hidden="true">star</span>
-                  ))}
+      <section className="relative pt-28 pb-16 lg:pt-36">
+        <div className="max-w-[1920px] mx-auto px-6 md:px-12">
+          <motion.div variants={containerVariants} initial="hidden" animate="visible" className="relative min-h-[620px] sm:min-h-[min(720px,78vh)] overflow-hidden rounded-[2.5rem] bg-card-bg shadow-2xl">
+            <motion.img initial={{ opacity: 0, scale: 1.06 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 1.2, ease: customEase }} alt="Architectural exterior of a minimalist wooden cabin situated on a rocky ridge beside a tranquil river" className="absolute inset-0 w-full h-full object-cover" src={heroImage} decoding="async" />
+            <div className="absolute inset-0 bg-gradient-to-r from-background/90 via-background/35 to-transparent" />
+            <div className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-background/80 to-transparent" />
+            <div className="relative z-10 flex min-h-[620px] sm:min-h-[min(720px,78vh)] flex-col justify-between p-7 sm:p-10 lg:p-16">
+              <motion.p variants={itemVariants} className="font-label text-xs uppercase tracking-[0.3em] text-accent">Jadhav Architects / 01</motion.p>
+              <div className="max-w-3xl">
+                <motion.h1 variants={itemVariants} className="font-headline font-extrabold text-[15vw] sm:text-[11vw] lg:text-[clamp(72px,9vw,148px)] leading-[0.84] tracking-tight uppercase text-primary-text">
+                  Wilderness<br /><span className="text-accent italic">Riverside</span><br />Cabins
+                </motion.h1>
+                <div className="mt-8 flex flex-col gap-7 sm:block">
+                  <motion.p variants={itemVariants} className="font-body text-base md:text-lg text-primary-text/80 font-light leading-relaxed max-w-md">
+                    Curating bespoke architectural escapes where modern geometry meets the untamed flow of nature. Experience elevated living in the heart of the wild.
+                  </motion.p>
+                  <motion.div variants={itemVariants} className="sm:absolute sm:bottom-16 sm:right-10 lg:right-16">
+                    <Link to="/contact" className="group inline-flex items-center gap-4 bg-accent text-on-accent px-8 py-4 rounded-full font-headline font-bold uppercase tracking-[0.1em] shadow-2xl hover:scale-105 transition-all duration-300" aria-label="Enquire about booking our cabins">
+                      Book Now <span className="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                    </Link>
+                  </motion.div>
                 </div>
               </div>
+              <span className="font-label text-xs uppercase tracking-[0.25em] text-primary-text/80">A place to return to</span>
             </div>
-            <p className="font-body text-sm md:text-base text-primary-text/80 leading-relaxed px-2">
-              "From the first sketch to the final detail, the team made the entire process feel effortless. Our cabin is beautiful, comfortable, and perfectly connected to its surroundings."
-            </p>
-          </motion.div>
-
-          {/* Scroll Path Indicator */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1.2, duration: 1 }}
-            className="absolute left-0 bottom-20 flex-col items-center gap-4 hidden lg:flex"
-            aria-hidden="true"
-          >
-            <div className="w-[1px] h-32 bg-accent/30 relative overflow-hidden">
-              <motion.div
-                animate={{
-                  y: [0, 128, 0],
-                }}
-                transition={{
-                  duration: 2,
-                  repeat: Infinity,
-                  ease: "linear",
-                }}
-                className="absolute top-0 left-0 w-full h-1/2 bg-accent"
-              />
-            </div>
-            <span className="font-label text-[10px] uppercase tracking-[0.3em] vertical-text transform origin-center text-accent">
-              Scroll Path
-            </span>
           </motion.div>
         </div>
-      </div>
+      </section>
+
+      <section className="max-w-[1920px] mx-auto px-6 md:px-12 py-16 lg:py-20">
+        <div className="relative grid md:grid-cols-[1.45fr_1fr] gap-8 lg:gap-12 items-start border-t border-primary-text/15 pt-4">
+          <p className="font-label text-[9px] uppercase tracking-[0.3em] text-accent md:absolute md:left-0 md:top-4">02 / The practice</p>
+          <div className="max-w-xl text-left md:pt-8"><h2 className="font-headline font-bold text-4xl md:text-5xl lg:text-6xl leading-[0.94]">Spaces that make the landscape feel closer.</h2><p className="font-body text-primary-text/65 text-sm md:text-base leading-relaxed max-w-lg mt-5">We design quiet, tactile places for living well. Every project begins with its setting and ends with an architecture that feels inevitable.</p></div>
+          <div className="md:-mt-1 lg:translate-x-6 lg:scale-105 lg:origin-center"><div className="relative aspect-[1.35/1] overflow-hidden rounded-[1.5rem] bg-transparent"><img src={introImage} alt="Three-dimensional architectural house render surrounded by landscape" loading="lazy" className="w-full h-full object-contain p-4 transition-transform duration-700 hover:scale-105" /></div><div className="flex items-start justify-between gap-4 mt-4"><p className="font-label text-[9px] uppercase tracking-[0.18em] text-primary-text/50 leading-loose">Homes, retreats, and places with a slower rhythm.</p><Link to="/about" className="shrink-0 inline-flex items-center gap-2 text-accent font-label text-[9px] uppercase tracking-[0.16em] hover:gap-4 transition-all">Our approach <span className="material-symbols-outlined text-sm">arrow_forward</span></Link></div></div>
+        </div>
+      </section>
+
+      <section className="max-w-[1920px] mx-auto px-6 md:px-12 pb-20 lg:pb-28">
+        <div className="grid lg:grid-cols-[1.35fr_0.65fr] gap-5 items-stretch">
+          <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8, ease: customEase }} className="relative min-h-[360px] lg:min-h-[520px] overflow-hidden rounded-[2.5rem] bg-card-bg">
+            <img src={featuredImage} alt={`${projects[0].title} architectural project exterior`} loading="lazy" className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 hover:scale-105" />
+            <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-transparent to-transparent" />
+            <div className="absolute bottom-7 left-7 right-7 flex items-end justify-between gap-5"><div><p className="font-label text-xs uppercase tracking-[0.2em] text-accent mb-2">Featured work / 2024</p><h3 className="font-headline text-2xl md:text-4xl font-bold">The Void House</h3></div><Link to="/gallery" aria-label="View featured project" className="shrink-0 w-12 h-12 rounded-full bg-accent text-on-accent flex items-center justify-center hover:scale-110 transition-transform"><span className="material-symbols-outlined">arrow_outward</span></Link></div>
+          </motion.div>
+          <div className="rounded-[2.5rem] bg-section-tone p-8 md:p-10 flex flex-col justify-between">
+            <div><p className="font-label text-xs uppercase tracking-[0.3em] text-accent">A considered approach</p><p className="font-headline text-2xl md:text-3xl leading-tight mt-8">Architecture can be both a refuge and a way of seeing.</p></div>
+            <div className="border-t border-primary-text/15 pt-6 mt-12"><p className="font-body text-primary-text/65 leading-relaxed">From the first sketch to the final detail, every decision is shaped by light, material, and the life that will unfold there.</p><Link to="/contact" className="inline-flex items-center gap-3 text-accent font-label text-xs uppercase tracking-[0.2em] mt-7">Start a conversation <span className="material-symbols-outlined text-base">arrow_forward</span></Link><div className="mt-10 pt-6 border-t border-primary-text/15"><div className="flex items-center gap-3 mb-3"><div className="w-10 h-10 rounded-full bg-accent/20 flex items-center justify-center overflow-hidden shrink-0"><img alt="Headshot of Minal Jadhav, a client of Jadhav Architects" className="w-full h-full object-cover" src="https://randomuser.me/api/portraits/women/44.jpg" loading="lazy" /></div><div><p className="font-headline font-bold text-sm text-primary-text">minal jadhav</p><div className="flex text-accent scale-75 origin-left" aria-label="5 star rating">{[...Array(5)].map((_, i) => <span key={i} className="material-symbols-outlined filled" aria-hidden="true">star</span>)}</div></div></div><p className="font-body text-sm text-primary-text/75 leading-relaxed">"From the first sketch to the final detail, the team made the entire process feel effortless. Our cabin is beautiful, comfortable, and perfectly connected to its surroundings."</p></div></div>
+          </div>
+        </div>
+      </section>
+
+      <section className="max-w-[1920px] mx-auto px-6 md:px-12 pb-20 lg:pb-32">
+        <div className="flex items-end justify-between gap-6 border-t border-primary-text/15 pt-8 mb-8"><div><p className="font-label text-xs uppercase tracking-[0.3em] text-accent mb-4">03 / Selected work</p><h2 className="font-headline font-bold text-3xl md:text-5xl">Built for belonging.</h2></div><Link to="/gallery" className="hidden sm:inline-flex items-center gap-3 text-accent font-label text-xs uppercase tracking-[0.2em]">View all work <span className="material-symbols-outlined text-base">arrow_forward</span></Link></div>
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-5">
+          {projects.slice(0, 4).map((project, index) => (
+            <motion.article key={project.id} initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-80px' }} transition={{ duration: 0.7, delay: index * 0.08, ease: customEase }} className={`group ${index === 1 || index === 3 ? 'lg:mt-12' : ''}`}>
+              <Link to="/gallery" className="block" aria-label={`View ${project.title} project`}><div className={`overflow-hidden rounded-3xl bg-card-bg ${index === 0 ? 'aspect-[4/5]' : index === 1 ? 'aspect-[5/6]' : index === 2 ? 'aspect-[4/5]' : 'aspect-[5/6]'}`}><img src={project.image} alt={project.title} loading="lazy" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" /></div><div className="flex items-start justify-between gap-3 pt-4"><div><h3 className="font-headline font-bold text-base text-primary-text">{project.title}</h3><p className="font-label text-xs uppercase tracking-[0.12em] text-primary-text/50 mt-1">{project.subtitle}</p></div><span className="material-symbols-outlined text-accent text-lg">arrow_outward</span></div></Link>
+            </motion.article>
+          ))}
+        </div>
+      </section>
     </main>
   )
 }
