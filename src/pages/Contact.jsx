@@ -42,8 +42,8 @@ export default function Contact() {
   return (
     <main className="pt-40 pb-24 px-6 md:px-12 lg:px-24">
       <Helmet>
-        <title>Contact | Parallel Paths Architecture</title>
-        <meta name="description" content="Begin your architectural journey. Contact Parallel Paths for bespoke residential, commercial, or cultural design enquiries." />
+        <title>Contact | Jadhav Architects Architecture</title>
+        <meta name="description" content="Begin your architectural journey. Contact Jadhav Architects for bespoke residential, commercial, or cultural design enquiries." />
       </Helmet>
 
       <div className="max-w-7xl mx-auto">

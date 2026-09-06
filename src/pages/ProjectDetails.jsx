@@ -67,8 +67,8 @@ export default function ProjectDetails() {
   return (
     <main>
       <Helmet>
-        <title>{`${project.title} | Parallel Paths Portfolio`}</title>
-        <meta name="description" content={`${project.philosophy || project.description} - Architectural study by Parallel Paths.`} />
+        <title>{`${project.title} | Jadhav Architects Portfolio`}</title>
+        <meta name="description" content={`${project.philosophy || project.description} - Architectural study by Jadhav Architects.`} />
       </Helmet>
 
       {/* Hero Section */}

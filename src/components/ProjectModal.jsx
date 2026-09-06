@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { createProject, updateProject } from '../firebase/services/projectService';
-import { uploadToIMGBB } from '../firebase/services/imgbbService';
+import { createProject, updateProject, recordImageFingerprint } from '../firebase/services/projectService';
+import { uploadFile } from '../firebase/services/storageService';
 import ImageCropModal from './ImageCropModal';
-import { compressImage } from '../utils/cropImage';
+import { processImageForWeb } from '../utils/imageProcessor';
 
 export default function ProjectModal({ isOpen, onClose, onSuccess, initialData }) {
   const [formData, setFormData] = useState({ 
@@ -201,11 +201,13 @@ export default function ProjectModal({ isOpen, onClose, onSuccess, initialData }
       // 1. Upload Featured Image
       let featuredUrl = initialData?.mainImage || imagePreview;
       if (croppedBlob) {
-        console.log("Uploading featured image to IMGBB...");
-        featuredUrl = await uploadToIMGBB(croppedBlob);
+        console.log("Processing and uploading featured image to Firebase Storage...");
+        const processedBlob = await processImageForWeb(croppedBlob, { maxWidth: 1920, preserveDimensions: croppedBlob.preserveDimensions });
+        featuredUrl = await uploadFile(processedBlob, `projects/main_${Date.now()}.webp`);
+        await recordImageFingerprint(croppedBlob.name || "featured", featuredUrl);
         
         if (!featuredUrl) {
-          throw new Error("IMGBB failed to return a URL for the featured image.");
+          throw new Error("Failed to return a URL for the featured image.");
         }
         console.log("Featured image uploaded:", featuredUrl);
       }
@@ -216,14 +218,12 @@ export default function ProjectModal({ isOpen, onClose, onSuccess, initialData }
         console.log(`Optimizing and uploading ${additionalCroppedBlobs.length} additional images...`);
         for (let i = 0; i < additionalCroppedBlobs.length; i++) {
           const blob = additionalCroppedBlobs[i];
-          let finalizedBlob = blob;
-          if (blob instanceof File) {
-             finalizedBlob = await compressImage(blob, 0.8, 1600);
-          }
-          const url = await uploadToIMGBB(finalizedBlob);
+          const processedBlob = await processImageForWeb(blob, { maxWidth: 1600, preserveDimensions: blob.preserveDimensions });
+          const url = await uploadFile(processedBlob, `projects/gallery_${Date.now()}_${i}.webp`);
+          await recordImageFingerprint(blob.name || `gallery_${i}`, url);
           
           if (!url) {
-            throw new Error(`IMGBB failed to return a URL for additional image ${i + 1}`);
+            throw new Error(`Failed to return a URL for additional image ${i + 1}`);
           }
           
           additionalUrls.push(url);

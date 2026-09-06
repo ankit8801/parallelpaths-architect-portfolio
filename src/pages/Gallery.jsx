@@ -33,8 +33,8 @@ export default function Gallery() {
   return (
     <main className="pt-32 pb-20 px-6 md:px-12 max-w-[1920px] mx-auto">
       <Helmet>
-        <title>Portfolio | Parallel Paths Architecture</title>
-        <meta name="description" content="Explore Obsidian Structures: A curated gallery of residential, commercial, and cultural architectural masterworks by Parallel Paths." />
+        <title>Portfolio | Jadhav Architects Architecture</title>
+        <meta name="description" content="Explore Obsidian Structures: A curated gallery of residential, commercial, and cultural architectural masterworks by Jadhav Architects." />
       </Helmet>
 
       {/* Header Section */}

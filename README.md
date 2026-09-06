@@ -27,7 +27,7 @@ Static portfolio sites break when they need to change. Every project update, ima
 
 ## The Solution
 
-A JAMstack architecture where the public site is a fast, animated React SPA backed by Firebase Firestore as a real-time database. A protected `/admin` route serves as the full CMS — no third-party dashboard, no plugins, no vendor lock-in.
+A JAMstack architecture where the public site is a fast, animated React SPA backed by Firebase Firestore as a real-time database. A  `/admin` route serves as the full CMS — no third-party dashboard, no plugins, no vendor lock-in.
 
 ---
 

@@ -92,3 +92,15 @@ export const deleteProject = async (id) => {
     throw new Error("Failed to delete project entry");
   }
 };
+
+export const recordImageFingerprint = async (originalName, uploadUrl) => {
+  try {
+    await addDoc(collection(db, "image_fingerprints"), {
+      originalName,
+      url: uploadUrl,
+      timestamp: serverTimestamp()
+    });
+  } catch (error) {
+    console.warn("Failed to record image fingerprint:", error);
+  }
+};

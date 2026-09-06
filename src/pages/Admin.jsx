@@ -6,7 +6,8 @@ import { fetchProjects, deleteProject } from '../firebase/services/projectServic
 import { useNavigate } from 'react-router-dom'
 import { fetchContacts } from '../firebase/services/contactService'
 import { getSettings, updateSetting } from '../firebase/services/settingsService'
-import { uploadToIMGBB } from '../firebase/services/imgbbService'
+import { uploadFile } from '../firebase/services/storageService'
+import { processImageForWeb } from '../utils/imageProcessor'
 import ProjectModal from '../components/ProjectModal'
 import ImageCropModal from '../components/ImageCropModal'
 
@@ -135,17 +136,24 @@ export default function Admin() {
     console.log(`--- Starting Page Content Upload: ${uploadingSlot} ---`);
 
     try {
-      // 1. Upload to IMGBB
-      console.log("Uploading to IMGBB...");
-      const imageUrl = await uploadToIMGBB(blob);
-      console.log("IMGBB Upload Success:", imageUrl);
+      const watermarkOptions = settings?.watermarkEnabled 
+        ? { enabled: true, text: settings.watermarkText || 'Jadhav Architects' }
+        : { enabled: false, text: '' };
+        
+      const processedBlob = await processImageForWeb(blob, {
+        maxWidth: 1920,
+        preserveDimensions: blob.preserveDimensions,
+        watermark: watermarkOptions
+      });
 
-      // 2. Update Firestore Settings
+      console.log("Uploading to Firebase Storage...");
+      const imageUrl = await uploadFile(processedBlob, `page_content/${uploadingSlot}_${Date.now()}.webp`);
+      console.log("Upload Success:", imageUrl);
+
       console.log("Updating Firestore settings...");
       await updateSetting(uploadingSlot, imageUrl);
       console.log("Firestore update success");
 
-      // 3. Update Local State
       setSettings(prev => ({ ...prev, [uploadingSlot]: imageUrl }));
       
     } catch (err) {
@@ -171,7 +179,7 @@ export default function Admin() {
     return (
       <main className="min-h-screen flex items-center justify-center p-6 bg-background relative overflow-hidden">
         <Helmet>
-          <title>Admin Login | Parallel Paths</title>
+          <title>Admin Login | Jadhav Architects</title>
           <meta name="robots" content="noindex, nofollow" />
         </Helmet>
 
@@ -238,7 +246,7 @@ export default function Admin() {
   return (
     <main className="min-h-screen bg-background flex">
       <Helmet>
-        <title>Dashboard | Parallel Paths Admin</title>
+        <title>Dashboard | Jadhav Architects Admin</title>
         <meta name="robots" content="noindex, nofollow" />
       </Helmet>
 
@@ -376,6 +384,42 @@ export default function Admin() {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {/* Watermark Settings */}
+              <div className="bg-card-bg/30 border border-white/5 p-8 rounded-3xl space-y-8 lg:col-span-2">
+                <div className="flex items-center gap-4">
+                  <span className="material-symbols-outlined text-accent">branding_watermark</span>
+                  <h3 className="font-headline font-bold text-lg uppercase tracking-wider text-primary-text">Global Watermark Settings</h3>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                  <div className="space-y-4 flex flex-col justify-center">
+                    <label className="flex items-center gap-4 cursor-pointer text-primary-text/80 hover:text-white transition-colors">
+                      <input 
+                        type="checkbox" 
+                        checked={settings.watermarkEnabled || false} 
+                        onChange={async (e) => {
+                          const val = e.target.checked;
+                          setSettings(prev => ({ ...prev, watermarkEnabled: val }));
+                          await updateSetting('watermarkEnabled', val);
+                        }}
+                        className="accent-accent w-5 h-5" 
+                      />
+                      <span className="font-label tracking-[0.2em] uppercase text-sm">Enable Watermark on Uploads</span>
+                    </label>
+                  </div>
+                  <div className="space-y-2">
+                    <label className="font-label text-[10px] tracking-[0.2em] uppercase text-primary-text/40 ml-1">Watermark Text</label>
+                    <input 
+                      type="text" 
+                      value={settings.watermarkText || ''} 
+                      onChange={(e) => setSettings(prev => ({ ...prev, watermarkText: e.target.value }))}
+                      onBlur={async () => await updateSetting('watermarkText', settings.watermarkText)}
+                      placeholder="e.g. Jadhav Architects" 
+                      className="w-full bg-background/50 border border-white/10 rounded-xl p-4 font-body text-primary-text focus:border-accent focus:outline-none transition-colors" 
+                    />
+                  </div>
+                </div>
+              </div>
+
               {/* Home Page Section */}
               <div className="bg-card-bg/30 border border-white/5 p-8 rounded-3xl space-y-8">
                 <div className="flex items-center gap-4">

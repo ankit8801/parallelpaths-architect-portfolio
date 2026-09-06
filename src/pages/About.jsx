@@ -28,8 +28,8 @@ export default function About() {
   return (
     <>
       <Helmet>
-        <title>About | Parag Jadhav — Parallel Paths</title>
-        <meta name="description" content="Meet Parag Jadhav, founder of Parallel Paths. A digital creator and visionary building aesthetic, cinematic experiences through design, storytelling, and modern visual culture." />
+        <title>About | Parag Jadhav — Jadhav Architects</title>
+        <meta name="description" content="Meet Parag Jadhav, founder of Jadhav Architects. A digital creator and visionary building aesthetic, cinematic experiences through design, storytelling, and modern visual culture." />
       </Helmet>
 
       {/* SECTION 1: Dark-themed About (Primary) */}
@@ -45,7 +45,7 @@ export default function About() {
           >
             <div className="aspect-[4/5] overflow-hidden rounded-2xl shadow-2xl transition-transform duration-700 hover:scale-[1.02]">
               <img
-                alt="Portrait of Parag Jadhav, founder and principal architect of Parallel Paths"
+                alt="Portrait of Parag Jadhav, founder and principal architect of Jadhav Architects"
                 className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-1000"
                 src={images.portrait}
                 decoding="async"
@@ -73,7 +73,7 @@ export default function About() {
 
             <div className="space-y-8 max-w-xl">
               <p className="text-lg md:text-xl leading-relaxed text-primary-text/70 font-light font-body">
-                Parag Jadhav is the founder of Parallel Paths, an architectural practice rooted in clarity, restraint, and purposeful design. His work focuses on creating spaces that feel grounded, immersive, and deeply connected to their surroundings.
+                Parag Jadhav is the founder of Jadhav Architects, an architectural practice rooted in clarity, restraint, and purposeful design. His work focuses on creating spaces that feel grounded, immersive, and deeply connected to their surroundings.
               </p>
               <p className="text-lg md:text-xl leading-relaxed text-primary-text/70 font-light font-body">
                 To Parag, architecture is more than structure — it is experience. Every line, material, and spatial decision is crafted to evoke emotion, create harmony, and shape how people interact with their environment. His vision is to design spaces that feel timeless, intentional, and deeply human.

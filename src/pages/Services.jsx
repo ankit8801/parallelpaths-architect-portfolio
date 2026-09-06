@@ -28,7 +28,7 @@ export default function Services() {
   return (
     <main className="tonal-gradient flex-grow pt-32 pb-24">
       <Helmet>
-        <title>Services | Parallel Paths Architecture</title>
+        <title>Services | Jadhav Architects Architecture</title>
         <meta name="description" content="Discover our architectural services - blending finesse with nature's serenity in our riverside cabin projects." />
       </Helmet>
 

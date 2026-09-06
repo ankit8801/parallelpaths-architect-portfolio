@@ -41,8 +41,8 @@ export default function Home() {
   return (
     <main className="relative min-h-screen flex items-center pt-24 lg:pt-0 overflow-hidden">
       <Helmet>
-        <title>Home | Parallel Paths Architecture</title>
-        <meta name="description" content="Parallel Paths Architecture - Bespoke architectural escapes where modern geometry meets the untamed flow of nature." />
+        <title>Home | Jadhav Architects Architecture</title>
+        <meta name="description" content="Jadhav Architects Architecture - Bespoke architectural escapes where modern geometry meets the untamed flow of nature." />
       </Helmet>
 
       {/* Background split */}
@@ -111,7 +111,7 @@ export default function Home() {
             <div className="flex items-center gap-3 mb-3 md:mb-4">
               <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-accent/20 flex items-center justify-center overflow-hidden shrink-0">
                 <img
-                  alt="Headshot of Elena Rodriguez, a client of Parallel Paths"
+                  alt="Headshot of Elena Rodriguez, a client of Jadhav Architects"
                   className="w-full h-full object-cover"
                   src="https://lh3.googleusercontent.com/aida-public/AB6AXuCic1KnN6HJhhlYVNbeTBTNhh-uod8WYt9nwHE6DX10q5PV4biN83-H82gp10V1mUgwSn6mG-WuXqrKH3L3-2vaUncIfN0guwnkEL-ohrTK48HV9eqxtMoD9Ut_VF3RcY1ntIKe546zHxjr-ah8sQ_UWkrIchNOLkhfd0Pi4DsHHwoaD5-McleI2BesdswzBA__-qLGC1OotXnT4KBhMY-08MTjXlB9y-1BaLUFbyzK_vHxahC9za9Wo-XwKkEB_7OFM0KsSgScZl4A"
                   loading="lazy"
