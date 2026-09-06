@@ -12,9 +12,13 @@ const projectOptions = [
 ]
 
 const contactInfo = [
-  { icon: 'location_on', label: 'Studio', detail: '422 Obsidian Way, High Desert, AZ 86336' },
-  { icon: 'mail', label: 'Enquiries', detail: 'projects@parallelpaths.com' },
-  { icon: 'call', label: 'Direct', detail: '+1 (555) 012-3456' },
+  {
+    icon: 'location_on',
+    label: 'Studio',
+    detail: 'Mhada colony, opposite to G-Champ Pre-School,\nnear mhada garden, Aamrai, Karjat,\nMaharashtra 410201',
+  },
+  { icon: 'mail', label: 'Enquiries', detail: 'jadhavparag169@gmail.com' },
+  { icon: 'call', label: 'Direct', detail: '+91 88886 28477' },
 ]
 
 export default function Contact() {
@@ -75,7 +79,7 @@ export default function Contact() {
             className="flex flex-col gap-12"
           >
             <p className="font-body text-xl md:text-2xl text-primary-text/60 leading-relaxed max-w-md">
-              We are currently accepting new commissions for 2025. Tell us about your vision.
+              Get in touch with us today and let's discuss your next project.
             </p>
 
             <div className="flex flex-col gap-8">
@@ -86,7 +90,7 @@ export default function Contact() {
                   </div>
                   <div>
                     <span className="font-label text-[10px] tracking-[0.2em] uppercase text-accent/60 block mb-1">{info.label}</span>
-                    <p className="font-body text-lg text-primary-text">{info.detail}</p>
+                    <p className="font-body text-lg text-primary-text" style={{ whiteSpace: 'pre-line' }}>{info.detail}</p>
                   </div>
                 </div>
               ))}
