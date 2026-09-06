@@ -127,7 +127,7 @@ export default function Home() {
               </div>
             </div>
             <p className="font-body text-sm md:text-base text-primary-text/80 leading-relaxed px-2">
-              "An unparalleled retreat. The architecture doesn't just sit in nature; it converses with it. Truly transformative space."
+              "From the first sketch to the final detail, the team made the entire process feel effortless. Our cabin is beautiful, comfortable, and perfectly connected to its surroundings."
             </p>
           </motion.div>
 
